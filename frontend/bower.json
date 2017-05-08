@@ -1,0 +1,20 @@
+{
+  "name": "frontend",
+  "description": "julius3d.com",
+  "main": "index.js",
+  "authors": [
+    "Julius Alvarado <angularjs.uiux@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularfire": "^2.3.0"
+  }
+}
