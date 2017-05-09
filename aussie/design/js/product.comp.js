@@ -15,7 +15,6 @@
             vm.categoriesTitle = "AussieProducts.com categories";
             vm.jexpenses = jProductGroup1Data.jexpenses;
 
-
             vm.createNewCategory = function () {
                 vm.jcategories.$add({name: vm.newCategoryName});
                 vm.newCategoryName = '';
