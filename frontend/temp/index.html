@@ -3,19 +3,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Julius3D.com</title>
+	<!-- vendorInject:css -->
+	<!-- endinject -->
 	<!-- inject:css -->
 	<!-- endinject -->
 </head>
 
 
-<body>
+<body ng-controller="LoginCtrl">
 
 <h1>Ello world ^_^/</h1>
+<h2>SailsJS</h2>
+<button ng-click="login()">Login</button>
 
-<!-- inject:js -->
+
+<!-- vendorInject:js -->
 <script src="vendor/angular.js"></script>
 <script src="vendor/firebase.js"></script>
 <script src="vendor/angularfire.js"></script>
+<!-- endinject -->
+
+<!-- inject:js -->
+<script src="app.js"></script>
+<script src="login.ctrl.js"></script>
 <!-- endinject -->
 
 </body>
