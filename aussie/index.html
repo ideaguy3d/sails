@@ -12,6 +12,13 @@
 		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 			display: none !important;
 		}
+		
+		.hover-delete {
+			transform: scale(1.2, 1.2);
+			color: red;
+			transition: all 0.1s linear;
+			cursor: pointer;
+		}
 	</style>
 </head>
 
@@ -92,6 +99,7 @@
 <script src="design/js/product.comp.js"></script>
 <script src="design/js/expenses/expense.list.comp.js"></script>
 <script src="design/js/category.adder.comp.js"></script>
+<script src="design/js/expenses/edit.expense.com.js"></script>
 
 </body>
 </html>

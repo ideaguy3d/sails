@@ -12,7 +12,7 @@
         function($firebaseArray){
 
             var ExpenseList = $firebaseArray.$extend({
-                getTotal: function(){
+                getTotal: function () {
                     var total = 0;
                     angular.forEach(this.$list, function(rec){
                         total += rec.amount;

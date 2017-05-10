@@ -9,13 +9,19 @@
 	</thead>
 	
 	<tbody>
-		<tr ng-repeat="expense in $ctrl.jexpenses">
+		<tr ng-repeat="expense in $ctrl.jexpenses" ng-mouseenter="hovering = true"
+		        ng-mouseleave="hovering = false">
 			<td>{{ expense.date | date:'shortDate' }}</td>
 			<td>{{ expense.payee }}</td>
 			<td>{{ expense.description }}</td>
 			<td>{{ expense.jcategory.name }}</td>
 			<td>{{ expense.amount | currency }}</td>
-			<td>&nbsp;</td>
+			<td>
+				<span ng-show="hovering" class="glyphicon glyphicon-remove-circle"
+					ng-mouseenter="delhovering = true" ng-mouseleave="delhovering = false"
+					ng-class="{'hover-delete': delhovering}" ng-clicK="$ctrl.deleteExpense(expense)">
+				</span>
+			</td>
 		</tr>
 	</tbody>
 </table>

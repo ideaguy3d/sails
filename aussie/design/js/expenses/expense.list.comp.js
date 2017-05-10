@@ -13,7 +13,10 @@
         },
         templateUrl: 'design/js/expenses/expense.list.tem.html',
         controller: function(){
-
+            var vm = this;
+            vm.deleteExpense = function(expense){
+              vm.jexpenses.$remove(expense);
+            };
         }
     })
 }());
