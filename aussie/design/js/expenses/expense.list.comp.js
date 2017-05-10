@@ -11,6 +11,9 @@
         bindings: {
             jexpenses: '=expenseData'
         },
-        templateUrl: 'design/js/expenses/expense.list.tem.html'
+        templateUrl: 'design/js/expenses/expense.list.tem.html',
+        controller: function(){
+
+        }
     })
 }());

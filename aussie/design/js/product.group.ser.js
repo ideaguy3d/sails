@@ -6,8 +6,8 @@
 
     var app = angular.module('ap-slider');
     // products group 1 data service
-    app.factory("jProductGroup1Data", ['$firebaseObject', '$firebaseArray',
-        function ($firebaseObject, $firebaseArray) {
+    app.factory("jProductGroup1Data", ['$firebaseObject', '$firebaseArray', 'jExpenseList',
+        function ($firebaseObject, $firebaseArray, jExpenseList) {
             var ref_messages = firebase.database().ref().child('messages');
             var ref_row1 = firebase.database().ref().child('Row1');
             var ref_jcategories = firebase.database().ref().child('jcategories').orderByChild("name");
@@ -17,7 +17,7 @@
             return {
                 Row1: $firebaseArray(ref_row1),
                 jcategories: $firebaseArray(ref_jcategories),
-                jexpenses: $firebaseArray(ref_jexpenses),
+                jexpenses: jExpenseList(ref_jexpenses),
                 ProductsMessagesArray: function () {
                     return $firebaseArray(ref_messages);
                 }
