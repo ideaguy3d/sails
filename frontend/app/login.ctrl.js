@@ -11,6 +11,6 @@
                 console.log("jha - Login Button Pressed /^_^/");
             }
         }
-    ])
+    ]);
 }());
 

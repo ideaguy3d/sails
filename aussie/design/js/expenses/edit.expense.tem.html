@@ -4,7 +4,7 @@
 	<input type="text" class="form-control" ng-model="$ctrl.payee" placeholder="payee">
 	
 	<select ng-model="$ctrl.selectedCategory" class="form-control"
-			ng-options="category.name for category in $ctrl.categoires track by category.$id"></select>
+			ng-options="category.name for category in $ctrl.categories track by category.$id"></select>
 	
 	<input type="text" placeholder="Amount" class="form-control" ng-model="$ctrl.amount">
 	<button class="btn btn-info btn-sm" ng-click="$ctrl.create()">Create</button>

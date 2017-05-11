@@ -13,7 +13,6 @@
             var ref_jcategories = firebase.database().ref().child('jcategories').orderByChild("name");
             var ref_jexpenses = firebase.database().ref().child('jexpenses').child('julius1');
 
-
             return {
                 Row1: $firebaseArray(ref_row1),
                 jcategories: $firebaseArray(ref_jcategories),
