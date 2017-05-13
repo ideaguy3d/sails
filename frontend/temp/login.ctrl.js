@@ -5,12 +5,18 @@
 (function(){
     "use strict";
 
-    angular.module('app').controller('LoginCtrl', ['$scope',
-        function($scope){
+    angular.module('app').controller('LoginCtrl', ['$scope', '$auth', '$http',
+        function($scope, $auth, $http) {
             $scope.login = function(){
-                console.log("jha - Login Button Pressed /^_^/");
-            }
+                $auth.authenticate('twitter');
+            };
+
+            $scope.tweet = function(){
+                $http.post('/api/post/tweet', '').then(function(res){
+
+                });
+            };
         }
-    ])
+    ]);
 }());
 

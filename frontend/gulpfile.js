@@ -17,8 +17,6 @@ var paths = {
     bowerSrc: 'bower_components/**/*'
 };
 
-var tempIndex = gulp.src(paths.index).pipe(gulp.dest(paths.tempVendor));
-
 //-- DEFAULT task:
 gulp.task('default', ['watch']);
 
@@ -42,22 +40,26 @@ gulp.task('vendors', function () {
 });
 
 gulp.task('serve', ['copyAll'], function () {
-    return gulp.src(paths.temp).pipe(webserver({
-        livereload: true,
-        proxies: [{
-            source: '/api',
-            target: 'http://localhost:1337'
-        }]
-    }));
+    return gulp.src(paths.temp)
+        .pipe(webserver({
+            livereload: true,
+            proxies: [{
+                source: '/api',
+                target: 'http://localhost:1337'
+            }]
+        }
+    ));
 });
 
 gulp.task('copyAll', function () {
     var tempVendors = gulp.src(mainBowerFiles()).pipe(gulp.dest(paths.tempVendor));
-    var appFiles = gulp.src(paths.appSrc).pipe(gulp.dest(pathsTemp));
+    var appFiles = gulp.src(paths.appSrc).pipe(gulp.dest(paths.temp));
 
     return gulp.src(paths.index)
+        .pipe(gulp.dest(paths.temp))
         .pipe(inject(tempVendors, {relative: true, name: 'vendorInject'}))
-        .pipe(inject(appFiles, {relative: true})).pipe(gulp.dest(paths.temp));
+        .pipe(inject(appFiles, {relative: true}))
+        .pipe(gulp.dest(paths.temp));
 });
 
 gulp.task('watch', ['serve'], function () {
@@ -66,7 +68,7 @@ gulp.task('watch', ['serve'], function () {
     gulp.watch(paths.index, ['copyAll']);
 });
 
-gulp.task('clean', function(){
+gulp.task('clean', function () {
     del([paths.temp]);
 });
 
