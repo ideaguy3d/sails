@@ -12,6 +12,20 @@
 
     function BaseCtrlClass($scope, $http) {
 
+        io.socket.get('/emoji-socket', function(data){
+            $scope.emojisSocket = data;
+            $scope.$apply();
+        });
+
+        io.socket.on('emoji-socket', function(event){
+            switch (event.verb) {
+                case 'created':
+                    $scope.emojisSocket.push(event.data);
+                    $scope.$apply();
+                    break;
+            }
+        });
+
         $http.get('/emoji').then(function(response){
             $scope.emojis = response.data;
         }).catch(function(err){

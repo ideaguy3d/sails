@@ -282,13 +282,13 @@
         <h1 id="main-title" class="container"><%= __('A brand new app.') %></h1>
         <hr>
         <h3 class="container">You're looking at: <code><%= view.pathFromApp + '.' + view.ext %></code></h3>
-    </div>
+    </div> <br>
 
     <div class="container" ng-app="sails-app">
         <div class="jumbotron" ng-controller="BaseCtrl">
             <h1>AngularJS app:</h1>
             <h2>{{2+2}} = 4</h2> <br>
-            <p ng-repeat="emoji in emojis">{{emoji.text}}</p>
+            <p ng-repeat="emoji in emojisSocket">{{emoji.text}}</p>
         </div>
     </div>
 
