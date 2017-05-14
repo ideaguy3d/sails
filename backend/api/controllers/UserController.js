@@ -15,6 +15,7 @@ module.exports = {
         var requestTokenUrl = 'https://api.twitter.com/oauth/request_token';
         var accessTokenUrl = 'https://api.twitter.com/oauth/access_token';
         var profileUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
+        var authenticateUrl = 'https://api.twitter.com/oauth/authorize';
 
         // Part 1 of 2: Initial request from Satellizer.
         if (!req.body.oauth_token || !req.body.oauth_verifier) {
@@ -50,7 +51,7 @@ module.exports = {
                     consumer_key: config.TWITTER_KEY,
                     consumer_secret: config.TWITTER_SECRET,
                     token: accessToken.oauth_token,
-                    token_secret: accessToken.oauth_token_secret,
+                    token_secret: accessToken.oauth_token_secret
                 };
 
                 // Step 4. Retrieve user's profile information and email address.
@@ -78,6 +79,8 @@ module.exports = {
 
                                 user.twitter = profile.id;
                                 user.email = profile.email;
+                                user.twitterToken = profile.oauth_token;
+                                user.twitterSecret = profile.oauth_token_secret;
                                 user.displayName = user.displayName || profile.name;
                                 user.picture = user.picture || profile.profile_image_url_https.replace('_normal', '');
                                 user.save(function(err) {
@@ -94,9 +97,14 @@ module.exports = {
 
                             User.create({
                                 twitter: profile.user_id,
-                                displayName: profile.screen_name
+                                displayName: profile.screen_name,
+                                twitterToken: profile.oauth_token,
+                                twitterSecret: profile.oauth_token_secret
                             }).exec(function(err, user) {
-                                res.send({ token: createJWT(user) });
+                                var token = createToken(user);
+                                res.send({
+                                    token: token
+                                });
                             });
                         });
                     }
