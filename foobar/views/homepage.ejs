@@ -290,7 +290,12 @@
         <div class="jumbotron" ng-controller="BaseCtrl">
             <h1>AngularJS app:</h1>
             <h2>{{2+2}} = 4</h2> <br>
+            
+            <small>sails socket.io</small>
             <p ng-repeat="emoji in emojisSocket">{{emoji.text}}</p>
+            <hr>
+            <small>$http request</small>
+            <p ng-repeat="emoji2 in emojis">{{emoji2.text}}</p>
         </div>
     </div>
 

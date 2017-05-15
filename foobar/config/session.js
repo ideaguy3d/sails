@@ -56,13 +56,13 @@ module.exports.session = {
      ***************************************************************************/
 
     // redis://redistogo:69fec63ba05248b409c8367503fd7e7c@chubb.redistogo.com:9736/
-    host: 'chubb.redistogo.com',
-    port: 9736,
-    user: 'redistogo',
+    // host: 'chubb.redistogo.com',
+    // port: 9736,
+    // user: 'redistogo',
 
     // ttl: <redis session TTL in seconds>,
     // db: 0,
-    pass: '69fec63ba05248b409c8367503fd7e7c'
+    // pass: '69fec63ba05248b409c8367503fd7e7c'
     // prefix: 'sess:',
 
 

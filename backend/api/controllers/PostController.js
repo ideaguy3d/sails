@@ -19,7 +19,7 @@ module.exports = {
             });
 
             T.post('statuses/update',
-                {status: '... well, Ello World ^_^/'},
+                { status: '... well, Ello World ^_^/' },
                 function (err, data, response) {
                     console.log(data, err);
                 }

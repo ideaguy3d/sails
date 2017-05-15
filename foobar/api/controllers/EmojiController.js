@@ -6,6 +6,8 @@
  */
 
 module.exports = {
-	
+	food: function (req, res) {
+
+    }
 };
 
