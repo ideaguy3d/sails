@@ -6,7 +6,6 @@
  */
 
 module.exports = {
-
   attributes: {
       text: 'string'
   }

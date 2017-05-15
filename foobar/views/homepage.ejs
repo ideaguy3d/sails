@@ -270,6 +270,7 @@
         display: none;
     }
 </style>
+
 <script type="text/javascript">
     setTimeout(function sunrise() {
         document.getElementsByClassName('header')[0].style.backgroundColor = '#118798';
@@ -284,6 +285,7 @@
         <h3 class="container">You're looking at: <code><%= view.pathFromApp + '.' + view.ext %></code></h3>
     </div> <br>
 
+    <!-- AngularJS app -->
     <div class="container" ng-app="sails-app">
         <div class="jumbotron" ng-controller="BaseCtrl">
             <h1>AngularJS app:</h1>
