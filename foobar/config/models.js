@@ -17,7 +17,7 @@ module.exports.models = {
   * connections (see `config/connections.js`)                                *
   *                                                                          *
   ***************************************************************************/
-  connection: 'mongoLabMongoDb',
+  // connection: 'mongoLabMongoDb',
 
   /***************************************************************************
   *                                                                          *
@@ -28,5 +28,4 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
   migrate: 'alter'
-
 };
