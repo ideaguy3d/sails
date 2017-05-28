@@ -5,27 +5,52 @@
 (function () {
     "use strict";
     var app = angular.module('ap-slider');
-    app.controller('apSliderEditCtrl', ['$scope', '$timeout', 'jProductGroup1Data',
-        function ($scope, $timeout, jProductGroup1Data) {
-            $scope.productsGroup1_title = "Anzac Day";
-            $scope.apcCurrentProducts = jProductGroup1Data.Row1; // will change to different product group later
+    app.controller('apcSliderEditCtrl', ['$scope', '$timeout', 'jProductGroup1Data', 'requireAuth', 'Auth',
+        function ($scope, $timeout, jProductGroup1Data, requireAuth, Auth) {
+            // Row1 Data
+            $scope.apcRow1Group1 = jProductGroup1Data.Row1Group1;
+            $scope.apcRow1Group2 = jProductGroup1Data.Row1Group2;
+            $scope.apcRow1Group3 = jProductGroup1Data.Row1Group3;
+            $scope.apcRow1Group4 = jProductGroup1Data.Row1Group4;
+
+            // Row2 Data
+            $scope.apcRow2Group1 = jProductGroup1Data.Row2Group1;
+            $scope.apcRow2Group2 = jProductGroup1Data.Row2Group2;
+            $scope.apcRow2Group3 = jProductGroup1Data.Row2Group3;
+            $scope.apcRow2Group4 = jProductGroup1Data.Row2Group4;
+
+            // Row3 Data
+            $scope.apcRow3Group1 = jProductGroup1Data.Row3Group1;
+            $scope.apcRow3Group2 = jProductGroup1Data.Row3Group2;
+            $scope.apcRow3Group3 = jProductGroup1Data.Row3Group3;
+            $scope.apcRow3Group4 = jProductGroup1Data.Row3Group4;
+
+            // Row4 Data
+            $scope.apcRow4Group1 = jProductGroup1Data.Row4Group1;
+            $scope.apcRow4Group2 = jProductGroup1Data.Row4Group2;
+            $scope.apcRow4Group3 = jProductGroup1Data.Row4Group3;
+            $scope.apcRow4Group4 = jProductGroup1Data.Row4Group4;
+
             $scope.activeArea = -1;
+            $scope.activeArea2 = -1;
+            $scope.activeArea3 = -1;
+            $scope.activeArea4 = -1;
+
             $scope.repetitionAmount = [0, 1, 2];
             $scope.incrementLeft = false;
-            $scope.showImageUrl = true;
-            $scope.showHeader = true;
-            $scope.showProductId = true;
-            $scope.showPrice = true;
             $scope.ratioPortrait = true; // have a function determine if image is portrait
             $scope.ratioLandscape = true; // have a function determine if image is landscape
+            $scope.apcProducts = [];
 
-            //-- private functions:
+            //-- private vars/functions:
             var pgPositionTracker = [
                 {side: "initialState"},
                 {side: "right"},
                 {side: "right"},
                 {side: "right"}
             ];
+
+            var indexer = 0, prodGrpArr = [], counter = 0, k;
 
             var removeIncrementLeft = function () {
                 angular.element('.product-group.increment-left').each(function (i) {
@@ -52,33 +77,80 @@
             };
 
             //-- public functions:
+            $scope.apcSignout = function () {
+                Auth.$signOut();
+            };
+
             $scope.updateActiveArea = function (index) {
                 switch (index) {
                     case 0:
-                        pgPositionTracker[0].side = "left";
-                        if (pgPositionTracker[1].side === "left" || pgPositionTracker[2].side === "left") {
+                        pgPositionTracker[0].side = "center";
+
+                        if (pgPositionTracker[1].side === "center") {
+                            pgPositionTracker[1].side = "right";
+                        } else if (pgPositionTracker[2].side === "center") {
+                            pgPositionTracker[2].side = "right";
+                        } else if (pgPositionTracker[3].side === "center") {
+                            pgPositionTracker[3].side = "right";
+                        }
+                        // this else if statement shouldn't get reached, but if it does it'll get the job done.
+                        else if (pgPositionTracker[1].side === "left"
+                            || pgPositionTracker[2].side === "left") {
                             removeIncrementLeft();
                             pgPositionTracker[1].side = "right";
                             pgPositionTracker[2].side = "right";
                         }
+
+                        // Most Important part of switch
                         $scope.activeArea = -1;
                         break;
                     case 1:
-                        pgPositionTracker[1].side = "left";
-                        if (pgPositionTracker[2].side === "left") {
+                        pgPositionTracker[1].side = "center";
+                        if (pgPositionTracker[0].side === "center") {
+                            pgPositionTracker[0].side = "left";
+                        } else if (pgPositionTracker[2].side === "center") {
+                            pgPositionTracker[2].side = "right";
+                        } else if (pgPositionTracker[3].side === "center") {
+                            pgPositionTracker[3].side = "right";
+                        } else if (pgPositionTracker[2].side === "left") {
                             removeIncrementLeft();
                             pgPositionTracker[2].side = "right";
                         }
+
+                        // Most Important part of switch
                         $scope.activeArea = 0;
                         break;
                     case 2:
-                        pgPositionTracker[2].side = "left";
+                        pgPositionTracker[2].side = "center";
+
+                        if (pgPositionTracker[0].side === "center") {
+                            pgPositionTracker[0].side = "left";
+                            removeIncrementLeft();
+                        } else if (pgPositionTracker[1].side === "center") {
+                            pgPositionTracker[1].side = "left";
+                            removeIncrementLeft();
+                        } else if (pgPositionTracker[3].side === "center") {
+                            pgPositionTracker[3].side = "right";
+                        }
+                        // Most Important part of switch
                         $scope.activeArea = 1;
                         break;
                     case 3:
-                        pgPositionTracker[3].side = "left";
+                        pgPositionTracker[3].side = "center";
+
+                        if (pgPositionTracker[0].side === "center") {
+                            pgPositionTracker[0].side = "left";
+                            removeIncrementLeft();
+                        } else if (pgPositionTracker[1].side === "center") {
+                            pgPositionTracker[1].side = "left";
+                            removeIncrementLeft();
+                        } else if (pgPositionTracker[2].side === "center") {
+                            pgPositionTracker[2].side = "left";
+                            removeIncrementLeft();
+                        }
+
+                        // Most Important part of switch
                         $scope.activeArea = 2;
-                        // domUpP2();
                         break;
                 }
 
@@ -100,45 +172,12 @@
                 }
             };
 
-            $scope.editHeader = function () {
-                $scope.showPrice = true;
-                $scope.showProductId = true;
-                $scope.showImageUrl = true;
-                $scope.showHeader = !$scope.showHeader;
-            };
-
-            $scope.editProductId = function () {
-                $scope.showHeader = true;
-                $scope.showPrice = true;
-                $scope.showImageUrl = true;
-                $scope.showProductId = !$scope.showProductId;
-            };
-
-            $scope.editPrice = function () {
-                $scope.showHeader = true;
-                $scope.showProductId = true;
-                $scope.showImageUrl = true;
-                $scope.showPrice = !$scope.showPrice;
-            };
-
-            $scope.editImageUrl = function () {
-                $scope.showHeader = true;
-                $scope.showProductId = true;
-                $scope.showPrice = true;
-                $scope.showImageUrl = !$scope.showImageUrl;
-            };
-
-            $scope.updateImageUrl = function(product){
-                console.log("productId = "+product.image);
-                $scope.apcCurrentProducts.$save(product);
-            };
-
             var _newImageUrl_g1p1 = 'Paste image url';
 
             $scope.row1products = {
                 group1product1: {
                     image: function (newImageUrl) {
-                        if(newImageUrl === 'g1p1') {
+                        if (newImageUrl === 'g1p1') {
                             return 'group1Product1 imageUrl'
                         } else if (newImageUrl === 0) {
                             _newImageUrl_g1p1 = "John West";
@@ -167,12 +206,68 @@
                 }
             };
 
-            $scope.setRow1 = function(index, product){
-                console.log("index = "+index+", product.image = "+product.image);
+            $scope.setRow1 = function (index, productGroup) {
+                // ensure for in loop happens only once
+                if (indexer < 1) {
+                    // fill the private prodGrpArr
+                    for (k in $scope.apcRow1) {
+                        // make sure 'k' is NOT being inherited
+                        if ($scope.apcRow1.hasOwnProperty(k)) {
+                            prodGrpArr[counter] = $scope.apcRow1[k];
+                            counter++;
+                        }
+                    }
+
+                    // copy into $scope.apcProducts only what is needed from prodGrpArr
+                    for (var i = 0; i < 4; i++) {
+                        $scope.apcProducts[i] = prodGrpArr[i];
+                        // get rid of keys that have a '$'
+                        var keys = Object.keys($scope.apcProducts[i]);
+                        keys = keys.filter(function (e) {
+                            return e.includes('$');
+                        });
+                        // $scope.apcProducts should be cleaned up after this loop
+                        keys.forEach(function (e) {
+                            delete $scope.apcProducts[i][e];
+                        });
+                    }
+                }
+                indexer++;
             };
 
-            $scope.bindToProductsModel = function(index){
-              return $scope.g1p1 = "a cool binding";
+            $scope.oldSetRow1 = function (index, product) {
+                switch (product.$id) {
+                    case "Group1":
+                        exposeRow1Model(product);
+                        break;
+                    case "Group2":
+                        exposeRow1Model(product);
+                        break;
+                    case "Group3":
+                        exposeRow1Model(product);
+                        break;
+                    case "Group4":
+                        exposeRow1Model(product);
+                        break;
+                    default:
+                        console.log("ERROR: parent index out of range!")
+                }
+            };
+
+            var exposeRow1Model = function (productGroup) {
+                var prodGrpArr = [], counter = 0, k;
+                for (k in productGroup) {
+                    // make sure 'k' is NOT being inherited
+                    if (productGroup.hasOwnProperty(k)) {
+                        prodGrpArr[counter] = productGroup[k];
+                        counter++;
+                    }
+                }
+                console.log(prodGrpArr);
+            };
+
+            $scope.bindToProductsModel = function (index) {
+                return $scope.g1p1 = "a cool binding";
             };
 
             $scope.getCategories = "categories from product.slider.edit.ctrl.js file";
